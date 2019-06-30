@@ -4,11 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-      "build": "tsc",
-      "start": "node dist",
-      "watch": "nodemon dist/index.js",
-      "dev": "tsc -w"
-      
+    "build": "tsc",
+    "start": "node dist",
+    "watch": "nodemon dist/index.js",
+    "dev": "tsc -w"
   },
   "repository": {
     "type": "git",
@@ -19,6 +18,8 @@
   "devDependencies": {
     "nodemon": "^1.19.1",
     "tslint": "^5.18.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.2",
+    "@types/node": "^10.14.10",
+    "@types/node-hid": "^0.7.0"
   }
 }
