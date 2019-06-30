@@ -1,1 +1,3 @@
-console.log("hello, world! i am vanilin. again");
+import * as HID from "node-hid";
+
+console.log(HID.devices());
