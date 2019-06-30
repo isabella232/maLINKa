@@ -2,7 +2,7 @@ import * as HID from "node-hid";
 import { EventEmitter } from "events";
 
 
-const SERIAL = "54-46-6b-00-bd-31"
+const SERIAL = "54:46:6b:00:bd:31"
 const APLHABET = "abcdefghijklmnopqrstuvwxyz1234567890";
 
 let logged = false;
