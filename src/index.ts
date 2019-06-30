@@ -1,3 +1,3 @@
-import * as HID from "node-hid";
+import keyboard from './keyboard'
 
-console.log(HID.devices());
+keyboard.on('key', console.log);
