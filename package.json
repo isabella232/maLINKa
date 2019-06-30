@@ -1,0 +1,24 @@
+{
+  "name": "vanilin",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+      "build": "tsc",
+      "start": "node dist",
+      "watch": "nodemon dist/index.js",
+      "dev": "tsc -w"
+      
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://pi@vanilin:/var/node/vanilin.git"
+  },
+  "author": "ibakaidov",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2"
+  }
+}
