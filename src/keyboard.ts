@@ -40,7 +40,7 @@ function main() {
       execSync('sudo chmod 777 '+keyboard.path)
       const hid = new HID.HID(keyboard.path);
       logged = true
-      emitter.emit('found')
+      emitter.emit('connected')
       hid.on('error', (e) => { emitter.emit('error', e); main() })
       hid.on("data", (buffer: Buffer) => {
         const type = buffer[0];

@@ -8,3 +8,8 @@ keyboard.on('key', (key,date)=>{
     player.stop()
   }
 });
+
+keyboard.on('connected', ()=>{
+  console.log('connected');
+  
+})
