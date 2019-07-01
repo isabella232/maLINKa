@@ -1,5 +1,6 @@
 import * as HID from "node-hid";
 import { EventEmitter } from "events";
+import { execSync } from "child_process";
 
 
 const SERIAL = "54:46:6b:00:bd:31"
@@ -36,6 +37,7 @@ function main() {
 
   if (keyboard) {
     try {
+      execSync('sudo chmod 777 '+keyboard.path)
       const hid = new HID.HID(keyboard.path);
       logged = true
       emitter.emit('found')
