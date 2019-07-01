@@ -1,13 +1,13 @@
 import keyboard from './keyboard'
 import player from './lib/player';
 import { homedir } from 'os';
+import { tables } from './lib/DB';
 
-keyboard.on('key', (key,date)=>{
+keyboard.on('key', async (key,date)=>{
   if(key=='a'){
-  player.playFile(homedir()+ '/hello.wav')
-  .catch(console.error)
+    console.log(await tables.statementsTable.getAllRows());
   } else{
-    player.stop()
+ 
   }
 });
 

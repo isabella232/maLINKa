@@ -23,6 +23,7 @@
     "@types/node-hid": "^0.7.0"
   },
   "dependencies": {
+    "mariadb": "^2.0.5",
     "node-hid": "^0.7.9"
   }
 }
