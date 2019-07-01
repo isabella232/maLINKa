@@ -17,7 +17,6 @@ class Player {
   }
   stop() {
     if (this.process) {
-      this.process.kill("-9")
       this.process.kill('SIGINT')
       this.process = null
 
