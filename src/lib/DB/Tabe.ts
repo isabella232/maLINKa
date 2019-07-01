@@ -1,10 +1,10 @@
 import { Item } from "../../structs/Item";
 import {DB} from ".";
 
-export class Table{
+export class Table<T extends Item>{
   struct: typeof Item;
   db: DB;
-  tableName: string;
+  tableName: string; 
 
   constructor(db:DB, struct: typeof  Item){
     this.db =db ;
@@ -12,7 +12,10 @@ export class Table{
     this.tableName = struct.name;
   }
 
-  async getAllRows(){
-    this.db.query('select * from `?` where 1', [this.tableName])
+  async getAllRows():Promise<T[]>{
+    const res =  await this.db.query('select * from `?` where 1', [this.tableName])
+    console.log(res);
+    
+    return [];
   }
 }

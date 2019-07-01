@@ -39,6 +39,6 @@ export class DB {
 const db = new DB();
 
 export const tables = {
-  categoriesTable: new Table(db, Category),
-  statementsTable: new Table(db, Statement)
+  categoriesTable: new Table<Category>(db, Category),
+  statementsTable: new Table<Statement>(db, Statement)
 };
