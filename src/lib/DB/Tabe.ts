@@ -13,7 +13,7 @@ export class Table<T extends Item>{
   }
 
   async getAllRows():Promise<T[]>{
-    const res =  await this.db.query('select * from `?` where 1', [this.tableName])
+    const res =  await this.db.query('select * from `'+this.tableName+'` where 1', [])
     console.log(res);
     
     return [];
