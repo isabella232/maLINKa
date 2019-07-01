@@ -10,7 +10,7 @@ export class Server {
     this.mountRoutes();
   }
   private mountMiddleware() {
-    this.app.use(cd + '/public')
+    this.app.use('/', express.static( cd + '/public'))
   }
   private mountRoutes() {
 
