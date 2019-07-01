@@ -2,10 +2,12 @@ import * as mariadb from 'mariadb';
 import { Table } from './Tabe';
 import { Category } from '../../structs/Category';
 import { Statement } from '../../structs/Statement';
+import { Item } from '../../structs/Item';
 
 
 
 export class DB {
+  
   pool: mariadb.Pool;
 
   constructor() {
@@ -26,10 +28,17 @@ export class DB {
   }
 
 
-  async query(sql: string, values: string[]) {
+  async query(sql: string, values: string[]):Promise<any> {
     return (await this.connection).query(sql, values)
   }
 
+
+  insert(tableName: string, object:any):Promise<any> {
+    return this.query('INSERT INTO '+tableName+' value (?,?)', Object.values(object))
+  }
+  findWhere(tableName: string, query: string, values: string[]): Promise<[any]> {
+    return this.query('SELECT * FROM '+tableName+' where '+query, values);
+  }
   private get connection(): Promise<mariadb.PoolConnection> {
     return this.pool.getConnection();
   }
