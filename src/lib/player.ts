@@ -5,6 +5,7 @@ class Player {
   private process: import("child_process").ChildProcess;
 
   playFile(path: string): Promise<void> {
+    this.stop();
     return new Promise((resolve, reject) => {
       this.process = spawn("aplay", ["-D", "bluealsa", path])
       this.process.on("exit", (code) => {
