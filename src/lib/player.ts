@@ -13,12 +13,12 @@ class Player {
 
       })
       this.process.on('error', reject)
-      this.process.stderr.pipe(process.stderr)
     })
   }
   stop() {
     if (this.process) {
-      this.process.kill('SIGHUP')
+      this.process.stdin.write('\x03')
+      this.process.kill()
       this.process = null
 
     }
