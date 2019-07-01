@@ -34,7 +34,7 @@ export class DB {
 
 
   insert(tableName: string, object:any):Promise<any> {
-    return this.query('INSERT INTO '+tableName+' (title, keys) value (?,?)', Object.values(object))
+    return this.query('INSERT INTO '+tableName+' (`title`, `keys`) value (?,?)', Object.values(object))
   }
   findWhere(tableName: string, query: string, values: string[]): Promise<[any]> {
     return this.query('SELECT * FROM '+tableName+' where '+query, values);
