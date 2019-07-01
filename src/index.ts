@@ -1,3 +1,6 @@
 import keyboard from './keyboard'
 
-keyboard.on('key', console.log);
+keyboard.on('key', (key,date)=>{
+  console.log(key);
+  
+});
