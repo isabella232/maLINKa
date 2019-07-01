@@ -1,4 +1,4 @@
-import { exec } from "child_process";
+import { exec, spawn } from "child_process";
 
 
 class Player {
@@ -6,18 +6,18 @@ class Player {
 
   playFile(path: string): Promise<string> {
     return new Promise((resolve, reject) => {
-     this.process = exec("aplay -D bluealsa " + path, (err, res) => {
-        if (err) {
-          reject(err)
-          return;
-        }
-        resolve(res)
-      })
-    })
+     this.process = spawn("aplay -D bluealsa " + path);
+     this.process.on('exit', (code)=>{
+       resolve(this.process.stdout.read())
+     });
+     this.process.on('error', (err)=>{
+       reject(err)
+     })
+    });
   }
   stop(){
     if(this.process){
-      this.process.kill()
+      this.process.kill('SIGINT')
     }
   }
 }
