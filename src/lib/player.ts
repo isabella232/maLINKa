@@ -6,7 +6,7 @@ class Player {
 
   playFile(path: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.process = spawn("aplay", ["-D bluealsa", path])
+      this.process = spawn("aplay", ["-D", "bluealsa", path])
       this.process.on("exit", (code) => {
         if (code === 0) resolve();
         this.process = null
