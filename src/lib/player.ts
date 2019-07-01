@@ -13,6 +13,7 @@ class Player {
 
       })
       this.process.on('error', reject)
+      
     })
   }
   stop() {
