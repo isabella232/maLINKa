@@ -7,7 +7,7 @@ import { text } from "body-parser";
 const {statementsTable, categoriesTable} = tables;
 
 
-const ROOT = homedir()+'/audio/'
+export const ROOT = homedir()+'/audio/'
 const URL = 'http://mac:8484?text='
 
 class Fetcher{

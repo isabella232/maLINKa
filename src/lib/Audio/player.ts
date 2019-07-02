@@ -1,8 +1,13 @@
 import { exec, spawn } from "child_process";
+import { ROOT } from "./fetcher";
 
 
 class Player {
   private process: import("child_process").ChildProcess;
+
+  playById(id:Number):Promise<void>{
+    return this.playFile(ROOT+id+'.wav')
+  }
 
   playFile(path: string): Promise<void> {
     this.stop();
