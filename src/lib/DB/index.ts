@@ -13,8 +13,8 @@ export class DB {
       user: 'root',
       password: '0812',
       database: 'vanilin',
-      acquireTimeout: 60_000,
-      connectionLimit: 5
+      connectTimeout:  10_000,
+      connectionLimit: 10
     });
     this.init();
   }
