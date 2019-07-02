@@ -29,7 +29,8 @@ class Application {
       console.log('connected');
       player.playNote('c')
     })
-    keyboard.on('pageup',()=>{
+    keyboard.on('pageup', () => {
+      if (this.currentCategory == null) return;
       player.playNote('a')
 
       this.resetCategory()
