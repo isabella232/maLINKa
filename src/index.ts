@@ -29,7 +29,9 @@ class Application {
       console.log('connected');
       player.playNote('c')
     })
-    keyboard.on('pgup',()=>{
+    keyboard.on('pageup',()=>{
+      player.playNote('a')
+
       this.resetCategory()
     })
 
@@ -45,7 +47,7 @@ class Application {
         player.playNote('error')
       } else {
         this.currentCategory = category;
-        player.playNote('a')
+        player.playNote('ab')
       }
     } else {
       const statement = await this.statementTable.getStatementByKey(key, this.currentCategory.id);
