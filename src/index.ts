@@ -1,7 +1,6 @@
 import keyboard from './keyboard'
 import player from './lib/Audio/player';
-import { homedir } from 'os';
-import { tables } from './lib/DB';
+import {  DB } from './lib/DB';
 import { Server } from './server';
 import { Category } from './structs/Category';
 import { CategoryTable, StatementTable } from './lib/DB/Table';
@@ -9,47 +8,50 @@ import { CategoryTable, StatementTable } from './lib/DB/Table';
 const server = new Server();
 server.listen();
 
-class Application{
 
-  currentCategory:Category;
-  caps:boolean = false;
-  hoard:boolean=false;
-  bank:number[];
+class Application {
+
+  currentCategory: Category;
+  caps: boolean = false;
+  hoard: boolean = false;
+  bank: number[];
   categoryTable: CategoryTable;
   statementTable: StatementTable;
 
-  constructor(){
-    this.categoryTable = tables.categoryTable;
-    this.statementTable = tables.statementTable;
+  constructor() {
+
+    const db = new DB;
+    this.categoryTable = new CategoryTable(db);
+    this.statementTable = new StatementTable(db);
     keyboard.on('key', this.onKey);
-    
-    keyboard.on('connected', ()=>{
+
+    keyboard.on('connected', () => {
       console.log('connected');
       player.playNote('c')
     })
-    
+
   }
 
-  main(){
+  main() {
 
   }
   async onKey(key: string, date: Date) {
-    if(this.currentCategory==null){
+    if (this.currentCategory == null) {
       const category = await this.categoryTable.getCategoryByKey(key);
-      if(category==null){
+      if (category == null) {
         player.playNote('error')
-      } else{
+      } else {
         this.currentCategory = category;
         player.playNote('a')
       }
     } else {
       const statement = await this.statementTable.getStatementByKey(key, this.currentCategory.id);
       this.bank.push(statement.id);
-      if(!this.hoard) this.speak();
+      if (!this.hoard) this.speak();
     }
   }
   async speak() {
-    for(let id of this.bank){
+    for (let id of this.bank) {
       await player.playById(id);
     }
   }

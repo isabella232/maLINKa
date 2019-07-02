@@ -41,10 +41,3 @@ export class DB {
   }
 
 }
-
-const db = new DB();
-
-export const tables = {
-  categoryTable: new CategoryTable(db),
-  statementTable: new StatementTable(db)
-};
