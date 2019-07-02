@@ -1,12 +1,18 @@
 import { exec, spawn } from "child_process";
 import { ROOT } from "./fetcher";
+import { homedir } from "os";
 
+const PIANO = homedir() + 'piano/'
 
 class Player {
   private process: import("child_process").ChildProcess;
 
-  playById(id:Number):Promise<void>{
-    return this.playFile(ROOT+id+'.wav')
+  playById(id: Number): Promise<void> {
+    return this.playFile(ROOT + id + '.wav')
+  }
+
+  playNote(note: string): Promise<void> {
+    return this.playFile(PIANO + note + '.wav')
   }
 
   playFile(path: string): Promise<void> {

@@ -15,5 +15,5 @@ keyboard.on('key', async (key,date)=>{
 
 keyboard.on('connected', ()=>{
   console.log('connected');
-  
+  player.playNote('c')
 })
