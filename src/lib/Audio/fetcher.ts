@@ -18,10 +18,11 @@ class Fetcher{
     for (const index in statements) {
       const statement = statements[index]
       await this.download(statement.title.toString(), statement.id)
-      console.log(`${index+1}/${statements.length} downloaded`);
+      console.log(`${+index+1}/${statements.length} downloaded`);
       
     }
-
+    process.exit()
+    
   }
   download(title: string, id:Number):Promise<Buffer> {
     return new Promise((resolve, reject)=>{
