@@ -2,7 +2,7 @@ import { exec, spawn } from "child_process";
 import { ROOT } from "./fetcher";
 import { homedir } from "os";
 
-const PIANO = homedir() + 'piano/'
+const PIANO = homedir() + '/piano/'
 
 class Player {
   private process: import("child_process").ChildProcess;
