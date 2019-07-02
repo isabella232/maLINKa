@@ -29,8 +29,8 @@ abstract class Table {
   }
 }
 
-export class CategoryTable extends Table{
-  constructor(db:DB){
+export class CategoryTable extends Table {
+  constructor(db: DB) {
     super(db, 'Category')
   }
 
@@ -38,12 +38,12 @@ export class CategoryTable extends Table{
     return new Category(row.id, row.title, row.keys.split(','));
   }
 
-  async createCategory(title: string, keys: string[]) :Promise<Category>  {
+  async createCategory(title: string, keys: string[]): Promise<Category> {
     const id = await this.createRow({ title, keys: keys.join(',') })
 
     return new Category(id, title, keys);
   }
-  
+
   async getCategoryByKey(key: String): Promise<Category> {
     return (await this.getAllCategories())
       .find(category => {
@@ -52,7 +52,7 @@ export class CategoryTable extends Table{
   }
 
 
-  async getAllCategories():Promise<Category[]>{
+  async getAllCategories(): Promise<Category[]> {
     const rows = await this.getAllRows();
     return rows.map((row) => this.parseRow(row))
   }
@@ -62,12 +62,12 @@ export class CategoryTable extends Table{
 export class StatementTable extends Table {
 
 
-  constructor(db:DB){
+  constructor(db: DB) {
     super(db, 'Statement')
   }
 
   private parseRow(row: any): Statement {
-    return new Statement(row.id, row.title, row.keys.split(','), row.categoriesId.split(','));
+    return new Statement(row.id, row.title, row.keys.split(','), row.categoriesId.split(',').map((s:string) => parseInt(s)));
   }
 
   async createStatement(title: String, keys: String[], categoriesId: Number[]): Promise<Statement> {
