@@ -10,7 +10,7 @@ server.listen();
 keyboard.on('key', async (key,date)=>{
 
     const statement =  (await tables.statementsTable.getStatementByKey(key, 1));
-    player.playById(statement.id)
+    if(statement) player.playById(statement.id)
 });
 
 keyboard.on('connected', ()=>{
