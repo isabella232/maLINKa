@@ -1,5 +1,5 @@
 import keyboard from './keyboard'
-import player from './lib/player';
+import player from './lib/Audio/player';
 import { homedir } from 'os';
 import { tables } from './lib/DB';
 import { Server } from './server';
