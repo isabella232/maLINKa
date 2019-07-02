@@ -14,7 +14,7 @@ class Application {
   currentCategory: Category;
   caps: boolean = false;
   hoard: boolean = false;
-  bank: number[];
+  bank: number[] = [];
   categoryTable: CategoryTable;
   statementTable: StatementTable;
 
@@ -47,12 +47,14 @@ class Application {
     } else {
       const statement = await this.statementTable.getStatementByKey(key, this.currentCategory.id);
       this.bank.push(statement.id);
+      this.currentCategory=null;
       if (!this.hoard) this.speak();
     }
   }
   async speak() {
     for (let id of this.bank) {
       await player.playById(id);
+      this.bank=[];
     }
   }
 
