@@ -1,6 +1,6 @@
 import keyboard from './keyboard'
 import player from './lib/Audio/player';
-import {  DB } from './lib/DB';
+import { DB } from './lib/DB';
 import { Server } from './server';
 import { Category } from './structs/Category';
 import { CategoryTable, StatementTable } from './lib/DB/Table';
@@ -23,11 +23,14 @@ class Application {
     const db = new DB;
     this.categoryTable = new CategoryTable(db);
     this.statementTable = new StatementTable(db);
-    keyboard.on('key',(key, date)=> this.onKey(key,date));
+    keyboard.on('key', (key, date) => this.onKey(key, date));
 
     keyboard.on('connected', () => {
       console.log('connected');
       player.playNote('c')
+    })
+    keyboard.on('pgup',()=>{
+      this.resetCategory()
     })
 
   }
@@ -46,15 +49,24 @@ class Application {
       }
     } else {
       const statement = await this.statementTable.getStatementByKey(key, this.currentCategory.id);
-      this.bank.push(statement.id);
-      this.currentCategory=null;
-      if (!this.hoard) this.speak();
+      if (statement == null) {
+        player.playNote('error')
+
+      } else {
+        this.bank.push(statement.id);
+        if (!this.hoard) this.speak();
+      }
+      this.resetCategory();
+
     }
+  }
+  resetCategory() {
+    this.currentCategory = null
   }
   async speak() {
     for (let id of this.bank) {
       await player.playById(id);
-      this.bank=[];
+      this.bank = [];
     }
   }
 
