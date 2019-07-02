@@ -59,13 +59,14 @@ class TermInput {
         }
         return
       }
-      // for (const index in this.currentCategory.statements) {
-      //   const statement = new Statement(this.currentCategory.statements[index]);
+      const statements = await statementsTable.getStatementsByCategory(this.currentCategory.id)
+      for (const index in statements) {
+        const statement = statements[index]
 
 
-      //   console.log(`${index}: ${statement.keys.join(', ')}. ${statement.textDown}`);
+        console.log(`${index}: ${statement.keys.join(', ')}. ${statement.title}`);
 
-      // }
+      }
 
     } else if (command === 'rm') {
       if (this.currentCategory == null) {

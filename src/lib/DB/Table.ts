@@ -83,7 +83,7 @@ export class StatementTable extends Table {
       })
   }
 
-  async getStatementsByCategory(categoryId: number): Promise<Statement[]> {
+  async getStatementsByCategory(categoryId: Number): Promise<Statement[]> {
     return (await this.getAllStatements())
       .filter((statement): boolean => {
         return statement.categoriesId.includes(categoryId);
