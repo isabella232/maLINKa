@@ -28,7 +28,7 @@ class TermInput {
         this.currentCategory = null
         this.reader.setPrompt(  '>> ')
       } else {
-        const category = await categoriesTable.findByKey(args[0])
+        const category = await categoriesTable.getCategoryByKey(args[0])
         if (category == null) {
           console.log('not found');
           return;
@@ -46,7 +46,7 @@ class TermInput {
       }
       let [title, keys] = args;
 
-      const statement = await statementsTable.createStatement(title, keys.split(','))
+      const statement = await statementsTable.createStatement(title, keys.split(','),[this.currentCategory.id])
       console.log('statement %s created', statement.title)
 
     }

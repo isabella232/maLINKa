@@ -9,7 +9,7 @@ server.listen();
 
 keyboard.on('key', async (key,date)=>{
   if(key=='a'){
-    console.log(await tables.statementsTable.getAllRows());
+    console.log(await tables.statementsTable.getAllStatements());
   } else{
  
   }

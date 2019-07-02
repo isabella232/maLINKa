@@ -1,10 +1,10 @@
-export class Item {
+export abstract class Item {
   id: Number;
   title: String;
   keys: String[];
-  constructor(id: Number, title: String, keys: String[]) {
-    this.id = id;
-    this.title = title;
-    this.keys = keys;
+  constructor(object: any) {
+    this.id = object.id;
+    this.title = object.title;
+    this.keys = (typeof object.keys == "string") ? object.keys.split(',') : object.keys;
   }
 }
