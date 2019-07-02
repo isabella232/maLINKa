@@ -1,5 +1,5 @@
 export abstract class Item {
-  id: Number;
+  id: number;
   title: String;
   keys: String[];
   constructor(object: any) {

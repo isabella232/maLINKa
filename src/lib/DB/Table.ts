@@ -76,7 +76,7 @@ export class StatementTable extends Table {
     return new Statement(id, title, keys, categoriesId);
   }
 
-  async getStatementByKey(key: String, categoryId: number): Promise<Statement> {
+  async getStatementByKey(key: String, categoryId: Number): Promise<Statement> {
     return (await this.getStatementsByCategory(categoryId))
       .find(statement => {
         return statement.keys.includes(key)

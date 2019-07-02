@@ -6,6 +6,7 @@ const PIANO = homedir() + '/piano/'
 
 class Player {
   private process: import("child_process").ChildProcess;
+  p: any;
 
   playById(id: Number): Promise<void> {
     return this.playFile(ROOT + id + '.wav')

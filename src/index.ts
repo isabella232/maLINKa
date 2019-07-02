@@ -3,17 +3,58 @@ import player from './lib/Audio/player';
 import { homedir } from 'os';
 import { tables } from './lib/DB';
 import { Server } from './server';
+import { Category } from './structs/Category';
+import { CategoryTable, StatementTable } from './lib/DB/Table';
 
 const server = new Server();
 server.listen();
 
-keyboard.on('key', async (key,date)=>{
+class Application{
 
-    const statement =  (await tables.statementsTable.getStatementByKey(key, 1));
-    if(statement) player.playById(statement.id)
-});
+  currentCategory:Category;
+  caps:boolean = false;
+  hoard:boolean=false;
+  bank:number[];
+  categoryTable: CategoryTable;
+  statementTable: StatementTable;
 
-keyboard.on('connected', ()=>{
-  console.log('connected');
-  player.playNote('c')
-})
+  constructor(){
+    this.categoryTable = tables.categoryTable;
+    this.statementTable = tables.statementTable;
+    keyboard.on('key', this.onKey);
+    
+    keyboard.on('connected', ()=>{
+      console.log('connected');
+      player.playNote('c')
+    })
+    
+  }
+
+  main(){
+
+  }
+  async onKey(key: string, date: Date) {
+    if(this.currentCategory==null){
+      const category = await this.categoryTable.getCategoryByKey(key);
+      if(category==null){
+        player.playNote('error')
+      } else{
+        this.currentCategory = category;
+        player.playNote('a')
+      }
+    } else {
+      const statement = await this.statementTable.getStatementByKey(key, this.currentCategory.id);
+      this.bank.push(statement.id);
+      if(!this.hoard) this.speak();
+    }
+  }
+  async speak() {
+    for(let id of this.bank){
+      await player.playById(id);
+    }
+  }
+
+}
+
+
+(new Application).main();

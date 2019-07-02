@@ -3,7 +3,7 @@ import * as readline from 'readline';
 import {tables} from './lib/DB'
 import { Category } from './structs/Category';
 
-const {statementsTable, categoriesTable} = tables;
+const {statementTable, categoryTable} = tables;
 
 
 class TermInput {
@@ -21,14 +21,14 @@ class TermInput {
     const [command, ...args] = line.split(/\s(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
     if (command === 'cc') {
-      const category = await categoriesTable.createCategory(args[0], args[1].split(','))
+      const category = await categoryTable.createCategory(args[0], args[1].split(','))
       console.log('category %s created', category.title)
     } else if (command === 'sc') {
       if (args[0] == '') {
         this.currentCategory = null
         this.reader.setPrompt(  '>> ')
       } else {
-        const category = await categoriesTable.getCategoryByKey(args[0])
+        const category = await categoryTable.getCategoryByKey(args[0])
         if (category == null) {
           console.log('not found');
           return;
@@ -46,20 +46,20 @@ class TermInput {
       }
       let [title, keys] = args;
 
-      const statement = await statementsTable.createStatement(title, keys.split(','),[this.currentCategory.id])
+      const statement = await statementTable.createStatement(title, keys.split(','),[this.currentCategory.id])
       console.log('statement %s created', statement.title)
 
     }
     else if (command === 'ls') {
       if (this.currentCategory == null) {
-        const categories = await categoriesTable.getAllCategories()
+        const categories = await categoryTable.getAllCategories()
         for (const index in categories) {
           const category = categories[index];
           console.log(`${index}: ${category.keys.join(', ')}. ${category.title}`);
         }
         return
       }
-      const statements = await statementsTable.getStatementsByCategory(this.currentCategory.id)
+      const statements = await statementTable.getStatementsByCategory(this.currentCategory.id)
       for (const index in statements) {
         const statement = statements[index]
 

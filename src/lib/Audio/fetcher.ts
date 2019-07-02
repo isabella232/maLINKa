@@ -2,9 +2,8 @@ import { homedir } from "os";
 import { tables } from "../DB";
 import { createWriteStream } from "fs";
 import { get } from "http";
-import { text } from "body-parser";
 
-const { statementsTable, categoriesTable } = tables;
+const { statementTable, categoryTable } = tables;
 
 
 export const ROOT = homedir() + '/audio/'
@@ -13,7 +12,7 @@ const URL = 'http://mac:8484?text='
 class Fetcher {
 
   async fetch() {
-    const statements = await statementsTable.getAllStatements()
+    const statements = await statementTable.getAllStatements()
 
     for (const index in statements) {
       const statement = statements[index]
