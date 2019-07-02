@@ -8,14 +8,6 @@ export class DB {
   pool: mariadb.Pool;
 
   constructor() {
-    this.pool = mariadb.createPool({
-      host: '127.0.0.1',
-      user: 'root',
-      password: '0812',
-      database: 'vanilin',
-      connectTimeout:  10_000,
-      connectionLimit: 10
-    });
     this.init();
   }
   async   init() {
@@ -38,8 +30,14 @@ export class DB {
   findWhere(tableName: string, query: string, values: string[]): Promise<[any]> {
     return this.query('SELECT * FROM ' + tableName + ' where ' + query, values);
   }
-  private get connection(): Promise<mariadb.PoolConnection> {
-    return this.pool.getConnection();
+  private get connection(): Promise<mariadb.Connection> {
+    return mariadb.createConnection({
+      host: '127.0.0.1',
+      user: 'root',
+      password: '0812',
+      database: 'vanilin',
+      
+    });
   }
 
 }
