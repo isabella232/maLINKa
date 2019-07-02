@@ -23,7 +23,7 @@ class Application {
     const db = new DB;
     this.categoryTable = new CategoryTable(db);
     this.statementTable = new StatementTable(db);
-    keyboard.on('key', this.onKey);
+    keyboard.on('key',(key, date)=> this.onKey(key,date));
 
     keyboard.on('connected', () => {
       console.log('connected');
