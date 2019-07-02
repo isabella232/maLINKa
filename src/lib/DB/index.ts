@@ -32,7 +32,7 @@ export class DB {
 
   insert(tableName: string, object: any): Promise<any> {
     const keys = Object.keys(object)
-    return this.query('INSERT INTO ' + tableName + ' (' + keys.map(k => `'${k}'`).join(', ') + ') value (' + (new Array(keys.length).fill('?').join(', ')) + ')', Object.values(object))
+    return this.query('INSERT INTO ' + tableName + ' (' + keys.map(k => `\`${k}\``).join(', ') + ') value (' + (new Array(keys.length).fill('?').join(', ')) + ')', Object.values(object))
   }
   findWhere(tableName: string, query: string, values: string[]): Promise<[any]> {
     return this.query('SELECT * FROM ' + tableName + ' where ' + query, values);
