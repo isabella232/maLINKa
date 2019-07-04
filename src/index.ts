@@ -63,6 +63,7 @@ class Application {
     })
     keyboard.on('enter',()=>{
       this.speak()
+      this.hoard=false;
     })
   }
 
