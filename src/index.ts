@@ -5,7 +5,7 @@ import { Server } from './server';
 import { Category } from './structs/Category';
 import { CategoryTable, StatementTable } from './lib/DB/Table';
 import { Statement } from './structs/Statement';
-import caps from './lib/caps';
+import caps from './lib/Caps';
 
 const server = new Server();
 server.listen();
