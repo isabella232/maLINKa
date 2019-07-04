@@ -17,7 +17,7 @@ class TermInput {
     this.reader.on('line', async (line) => {
       this.reader.pause()
       await this.onLine(line)
-      this.reader.resume
+      this.reader.resume()
     })
   }
 
