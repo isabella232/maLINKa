@@ -37,24 +37,31 @@ class Application {
       this.resetCategory()
     });
 
-    keyboard.on('pagedown', ()=>{
+    keyboard.on('pagedown', () => {
       const val = caps.switched
-      if(val){
+      if (val) {
         caps.off()
         player.playNote('d')
-      }else{
+      } else {
         caps.on()
         player.playNote('db')
-
       }
-
     })
 
-  }
-
-  main() {
+    keyboard.on('tab', () => { this.randomChoose() })
 
   }
+
+  async randomChoose() {
+    if (this.currentCategory == null) {
+      player.playNote('error')
+      return;
+    }
+    const statements = await this.statementTable.getStatementsByCategory(this.currentCategory.id)
+    const statement = statements[Math.floor(Math.random() * statements.length)]
+    this.print(statement)
+  }
+
   async onKey(key: string, date: Date) {
     if (this.currentCategory == null) {
       const category = await this.categoryTable.getCategoryByKey(key);
@@ -66,15 +73,17 @@ class Application {
       }
     } else {
       const statement = await this.statementTable.getStatementByKey(key, this.currentCategory.id);
-      if (statement == null) {
-        player.playNote('error')
-
-      } else {
-        this.bank.push(statement);
-        if (!this.hoard) this.speak();
-      }
+      this.print(statement)
       this.resetCategory();
 
+    }
+  }
+  print(statement: Statement) {
+    if (statement == null) {
+      player.playNote('error')
+    } else {
+      this.bank.push(statement);
+      if (!this.hoard) this.speak();
     }
   }
   resetCategory() {
@@ -90,4 +99,4 @@ class Application {
 }
 
 
-(new Application).main();
+(new Application);
