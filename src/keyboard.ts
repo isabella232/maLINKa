@@ -21,7 +21,10 @@ const keymap: KeyMap = {
   81: 'down',
   80: 'left',
   79: 'right',
-  43: 'tab'
+  43: 'tab',
+  41:'esc',
+  76:'del'
+  
 }
 
 
