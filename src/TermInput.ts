@@ -74,8 +74,10 @@ class TermInput {
 
     } else if (command === 'rm') {
       if (this.currentCategory == null) {
+        await categoryTable.deleteRowById(parseInt(args[0]))
       }
       else {
+        await statementTable.deleteRowById(parseInt(args[0]))
 
       }
     } else {

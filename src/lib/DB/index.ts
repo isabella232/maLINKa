@@ -30,6 +30,9 @@ export class DB {
   findWhere(tableName: string, query: string, values: string[]): Promise<[any]> {
     return this.query('SELECT * FROM ' + tableName + ' where ' + query, values);
   }
+  deleteRow(tableName:string, query:string, values:string[]):Promise<any>{
+    return this.query('DELETE FROM '+tableName+' where '+query, values)
+  }
   private get connection(): Promise<mariadb.Connection> {
     return mariadb.createConnection({
       host: '127.0.0.1',

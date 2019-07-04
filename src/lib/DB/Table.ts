@@ -27,6 +27,12 @@ abstract class Table {
 
     return insertId;
   }
+  deleteRow(query: string, values: string[]): Promise<null> {
+    return this.db.deleteRow(this.tableName, query, values);
+  }
+  deleteRowById(id: number): Promise<null> {
+    return this.deleteRow("`id`=?", [id.toString()]);
+  }
 }
 
 export class CategoryTable extends Table {
@@ -67,7 +73,7 @@ export class StatementTable extends Table {
   }
 
   private parseRow(row: any): Statement {
-    return new Statement(row.id, row.title, row.keys.split(','), row.categoriesId.split(',').map((s:string) => parseInt(s)));
+    return new Statement(row.id, row.title, row.keys.split(','), row.categoriesId.split(',').map((s: string) => parseInt(s)));
   }
 
   async createStatement(title: String, keys: String[], categoriesId: Number[]): Promise<Statement> {
