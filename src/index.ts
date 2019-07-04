@@ -50,6 +50,20 @@ class Application {
 
     keyboard.on('tab', () => { this.randomChoose() })
 
+    keyboard.on('space', () => {
+      if (this.hoard) {
+        this.hoard = false;
+        this.bank = [];
+
+      } else {
+        this.hoard = true;
+        player.playNote('b')
+
+      }
+    })
+    keyboard.on('enter',()=>{
+      this.speak()
+    })
   }
 
   async randomChoose() {
@@ -84,7 +98,12 @@ class Application {
       player.playNote('error')
     } else {
       this.bank.push(statement);
-      if (!this.hoard) this.speak();
+      if (!this.hoard) {
+        this.speak();
+
+      } else {
+        player.playNote('b')
+      }
     }
   }
   resetCategory() {
