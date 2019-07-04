@@ -12,7 +12,7 @@ export class Statement extends Item {
   }
 
   get isMultivalued():boolean{
-    return this.title.match(EXP).length>0;
+    return this.title.match(EXP)!=undefined;
   }
 
 
