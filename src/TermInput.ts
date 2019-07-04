@@ -1,9 +1,9 @@
 import * as readline from 'readline';
 
-import {tables} from './lib/DB'
+import { tables } from './lib/DB'
 import { Category } from './structs/Category';
 
-const {statementTable, categoryTable} = tables;
+const { statementTable, categoryTable } = tables;
 
 
 class TermInput {
@@ -14,7 +14,11 @@ class TermInput {
     this.reader = readline.createInterface(process.stdin, process.stdout);
     this.reader.setPrompt('>> ')
     this.reader.prompt(true)
-    this.reader.on('line', (line) => this.onLine(line))
+    this.reader.on('line', async (line) => {
+      this.reader.pause()
+      await this.onLine(line)
+      this.reader.resume
+    })
   }
 
   async onLine(line: string) {
@@ -26,7 +30,7 @@ class TermInput {
     } else if (command === 'sc') {
       if (args[0] == '') {
         this.currentCategory = null
-        this.reader.setPrompt(  '>> ')
+        this.reader.setPrompt('>> ')
       } else {
         const category = await categoryTable.getCategoryByKey(args[0])
         if (category == null) {
@@ -35,7 +39,7 @@ class TermInput {
         }
         this.currentCategory = category;
         console.log('category %s selected', category.title)
-        this.reader.setPrompt( category.title + '>> ')
+        this.reader.setPrompt(category.title + '>> ')
       }
 
     }
@@ -46,7 +50,7 @@ class TermInput {
       }
       let [title, keys] = args;
 
-      const statement = await statementTable.createStatement(title, keys.split(','),[this.currentCategory.id])
+      const statement = await statementTable.createStatement(title, keys.split(','), [this.currentCategory.id])
       console.log('statement %s created', statement.title)
 
     }
