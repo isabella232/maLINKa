@@ -59,7 +59,7 @@ class TermInput {
         const categories = await categoryTable.getAllCategories()
         for (const index in categories) {
           const category = categories[index];
-          console.log(`${index}: ${category.keys.join(', ')}. ${category.title}`);
+          console.log(`${category.id}: ${category.keys.join(', ')}. ${category.title}`);
         }
         return
       }
@@ -67,8 +67,7 @@ class TermInput {
       for (const index in statements) {
         const statement = statements[index]
 
-
-        console.log(`${index}: ${statement.keys.join(', ')}. ${statement.title}`);
+        console.log(`${statement.id}: ${statement.keys.join(', ')}. ${statement.title}`);
 
       }
 
