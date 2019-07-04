@@ -60,6 +60,7 @@ class Application {
     const statements = await this.statementTable.getStatementsByCategory(this.currentCategory.id)
     const statement = statements[Math.floor(Math.random() * statements.length)]
     this.print(statement)
+    this.resetCategory()
   }
 
   async onKey(key: string, date: Date) {
