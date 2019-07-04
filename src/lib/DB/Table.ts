@@ -33,6 +33,15 @@ abstract class Table {
   deleteRowById(id: number): Promise<null> {
     return this.deleteRow("`id`=?", [id.toString()]);
   }
+  updateRow(query:string,values:string[], newValues:object){
+    return this.db.updateRow(this.tableName, query, values, newValues)
+  }
+  updateTitle(id:number, title:string):Promise<null>{
+    return this.updateRow("`id`=?", [id.toString()], {title})
+  }
+  updateKeys(id:number, keys:string[]):Promise<null>{
+    return this.updateRow("`id`=?", [id.toString()], {keys:keys.join(',')})
+  }
 }
 
 export class CategoryTable extends Table {
