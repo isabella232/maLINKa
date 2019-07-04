@@ -16,14 +16,21 @@ class Fetcher {
 
     for (const index in statements) {
       const statement = statements[index]
+      if(statement.isMultivalued){
+        await this.download(statement.textUp.toString(), statement.id+"u")
+        await this.download(statement.textDown.toString(), statement.id+"d")
+
+      }
+      else{
       await this.download(statement.title.toString(), statement.id)
+      }
       console.log(`${+index + 1}/${statements.length} downloaded`);
 
     }
     process.exit()
 
   }
-  download(title: string, id: Number): Promise<Buffer> {
+  download(title: string, id: Number|String): Promise<Buffer> {
     return new Promise((resolve, reject) => {
 
       var file = createWriteStream(ROOT + id + '.wav');

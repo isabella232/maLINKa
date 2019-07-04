@@ -4,6 +4,8 @@ import { DB } from './lib/DB';
 import { Server } from './server';
 import { Category } from './structs/Category';
 import { CategoryTable, StatementTable } from './lib/DB/Table';
+import { Statement } from './structs/Statement';
+import caps from './lib/caps';
 
 const server = new Server();
 server.listen();
@@ -12,9 +14,8 @@ server.listen();
 class Application {
 
   currentCategory: Category;
-  caps: boolean = false;
   hoard: boolean = false;
-  bank: number[] = [];
+  bank: Statement[] = [];
   categoryTable: CategoryTable;
   statementTable: StatementTable;
 
@@ -34,6 +35,19 @@ class Application {
       player.playNote('a')
 
       this.resetCategory()
+    });
+
+    keyboard.on('pagedown', ()=>{
+      const val = caps.switched
+      if(val){
+        caps.off()
+        player.playNote('d')
+      }else{
+        caps.on()
+        player.playNote('db')
+
+      }
+
     })
 
   }
@@ -56,7 +70,7 @@ class Application {
         player.playNote('error')
 
       } else {
-        this.bank.push(statement.id);
+        this.bank.push(statement);
         if (!this.hoard) this.speak();
       }
       this.resetCategory();
@@ -67,8 +81,8 @@ class Application {
     this.currentCategory = null
   }
   async speak() {
-    for (let id of this.bank) {
-      await player.playById(id);
+    for (let statement of this.bank) {
+      await player.playStatement(statement);
       this.bank = [];
     }
   }

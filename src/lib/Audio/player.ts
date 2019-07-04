@@ -1,15 +1,17 @@
 import { exec, spawn } from "child_process";
 import { ROOT } from "./fetcher";
 import { homedir } from "os";
+import caps from "../Caps";
+import { Statement } from "../../structs/Statement";
+
 
 const PIANO = homedir() + '/piano/'
 
 class Player {
   private process: import("child_process").ChildProcess;
-  p: any;
 
-  playById(id: Number): Promise<void> {
-    return this.playFile(ROOT + id + '.wav')
+  playStatement(statement: Statement): Promise<void> {
+    return this.playFile(ROOT + statement.id+ (statement.isMultivalued?caps.switched?'u':'d':'') + '.wav')
   }
 
   playNote(note: string): Promise<void> {
