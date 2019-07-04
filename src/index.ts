@@ -65,6 +65,9 @@ class Application {
       this.speak()
       this.hoard=false;
     })
+    keyboard.on('esc',()=>{
+      player.stop()
+    })
   }
 
   async randomChoose() {
