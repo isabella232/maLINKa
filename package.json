@@ -7,7 +7,8 @@
     "build": "tsc",
     "start": "node dist",
     "watch": "nodemon dist/index.js",
-    "dev": "tsc -w"
+    "dev": "tsc -w",
+    "fetch":"node ./dist/lib/Audio/fetcher"
   },
   "repository": {
     "type": "git",
