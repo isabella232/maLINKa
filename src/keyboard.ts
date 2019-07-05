@@ -86,7 +86,7 @@ function main() {
   }
 
 } catch (error) {
-    
+ main()   
 }
 }
 
