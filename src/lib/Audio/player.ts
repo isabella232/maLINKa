@@ -1,5 +1,5 @@
 import { exec, spawn } from "child_process";
-import { ROOT } from "./fetcher";
+import { ROOT, SYSTEM_ROOT } from "./fetcher";
 import { homedir } from "os";
 import caps from "../Caps";
 import { Statement } from "../../structs/Statement";
@@ -7,7 +7,6 @@ import { Statement } from "../../structs/Statement";
 import { SystemStatement } from './System'
 
 const PIANO = homedir() + '/piano/'
-const SYSTEM = homedir() + '/system_sounds/'
 
 class Player {
   private process: import("child_process").ChildProcess;
@@ -20,7 +19,7 @@ class Player {
     return this.playFile(PIANO + note + '.wav')
   }
   playSystem(statement: SystemStatement): Promise<void> {
-    return this.playFile(SYSTEM + statement.code + '.wav')
+    return this.playFile(SYSTEM_ROOT + statement.code + '.wav')
   }
 
   playFile(path: string): Promise<void> {

@@ -8,12 +8,17 @@ const { statementTable, categoryTable } = tables;
 
 
 export const ROOT = homedir() + '/audio/'
-export const SYSTEM_ROOT = homedir() + '/system/'
+export const SYSTEM_ROOT = homedir() + '/system_sounds/'
 
 try {
   mkdirSync(ROOT)
-  mkdirSync(SYSTEM_ROOT)
 } catch (error) { }
+try {
+  mkdirSync(SYSTEM_ROOT)
+
+} catch (error) {
+
+}
 
 const URL = 'http://mac:8484?text='
 
@@ -40,8 +45,8 @@ class Fetcher {
       if (SYSTEM_STATEMENTS.hasOwnProperty(index)) {
         const element = SYSTEM_STATEMENTS[index];
         await this.download(element.title.toString(), element.code, true)
-        console.log(element.code+' downloaded');
-        
+        console.log(element.code + ' downloaded');
+
       }
     }
 
