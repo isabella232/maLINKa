@@ -4,18 +4,23 @@ import { homedir } from "os";
 import caps from "../Caps";
 import { Statement } from "../../structs/Statement";
 
+import { SystemStatement } from './System'
 
 const PIANO = homedir() + '/piano/'
+const SYSTEM = homedir() + '/system_sounds/'
 
 class Player {
   private process: import("child_process").ChildProcess;
 
   playStatement(statement: Statement): Promise<void> {
-    return this.playFile(ROOT + statement.id+ (statement.isMultivalued?caps.switched?'u':'d':'') + '.wav')
+    return this.playFile(ROOT + statement.id + (statement.isMultivalued ? caps.switched ? 'u' : 'd' : '') + '.wav')
   }
 
   playNote(note: string): Promise<void> {
     return this.playFile(PIANO + note + '.wav')
+  }
+  playSystem(statement: SystemStatement): Promise<void> {
+    return this.playFile(SYSTEM + statement.code + '.wav')
   }
 
   playFile(path: string): Promise<void> {
