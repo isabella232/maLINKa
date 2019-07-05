@@ -6,9 +6,11 @@ import { Category } from './structs/Category';
 import { CategoryTable, StatementTable } from './lib/DB/Table';
 import { Statement } from './structs/Statement';
 import caps from './lib/Caps';
+import { SYSTEM_STATEMENTS } from './lib/Audio/System';
 
 const server = new Server();
 server.listen();
+
 
 
 class Application {
@@ -28,7 +30,7 @@ class Application {
 
     keyboard.on('connected', () => {
       console.log('connected');
-      player.playNote('c')
+      player.playSystem(SYSTEM_STATEMENTS.KEYBOARD_CONNECTED)
     })
     keyboard.on('pageup', () => {
       if (this.currentCategory == null) return;
@@ -61,13 +63,16 @@ class Application {
 
       }
     })
-    keyboard.on('enter',()=>{
+    keyboard.on('enter', () => {
       this.speak()
-      this.hoard=false;
+      this.hoard = false;
     })
-    keyboard.on('esc',()=>{
+    keyboard.on('esc', () => {
       player.stop()
     })
+
+    player.playSystem(SYSTEM_STATEMENTS.STARTUP)
+
   }
 
   async randomChoose() {
