@@ -34,6 +34,8 @@ const emitter = new EventEmitter;
 
 function main() {
 
+  try {
+    
 
   const keyboard = HID.devices().find((device) => device.serialNumber == SERIAL);
 
@@ -82,6 +84,10 @@ function main() {
       main()
     }, 3000);
   }
+
+} catch (error) {
+    
+}
 }
 
 setTimeout(() => {
