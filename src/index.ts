@@ -7,6 +7,8 @@ import { CategoryTable, StatementTable } from './lib/DB/Table';
 import { Statement } from './structs/Statement';
 import caps from './lib/Caps';
 import { SYSTEM_STATEMENTS } from './lib/Audio/System';
+import { execSync } from 'child_process';
+import { homedir } from 'os';
 
 const server = new Server();
 server.listen();
@@ -23,6 +25,7 @@ class Application {
 
   constructor() {
 
+    execSync(homedir()+'/back.sh')
     const db = new DB;
     this.categoryTable = new CategoryTable(db);
     this.statementTable = new StatementTable(db);
