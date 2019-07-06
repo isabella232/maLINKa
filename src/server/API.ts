@@ -14,6 +14,7 @@ export class API {
     this.router.get('/statements', this.sendRows(statementTable.tableName))
     this.router.post('/statement/create', this.createStatement)
     this.router.delete('/delete/:table/:id', this.delete)
+    this.router.post('/update/:table/:id', this.update)
   }
 
 
@@ -55,4 +56,14 @@ export class API {
     }
       res.send({status:'ok'})
   }
+  async update(req: Request, res: Response) {
+    if (req.params.table == 'category') {
+      await categoryTable.updateRow( '`id`=?', [req.params.id], req.body);
+    } else if (req.params.table == 'statement') {
+      await statementTable.updateRow( '`id`=?', [req.params.id], req.body);
+      
+    }
+      res.send({status:'ok'})
+  }
+  
 }

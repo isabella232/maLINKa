@@ -33,9 +33,12 @@ export class DB {
   deleteRow(tableName: string, query: string, values: string[]): Promise<any> {
     return this.query('DELETE FROM ' + tableName + ' where ' + query, values)
   }
-  updateRow(tableName: string, query: string, values: string[], object: object) {
+  updateRow(tableName: string, query: string, values: string[], object: any) {
     const keys = Object.keys(object)
-    return this.query('UPDATE ' + tableName + ' SET ' + keys.map(k => `\`${k}\`='?'`).join(', ') + ';', Object.values(object))
+    const sql = 'UPDATE ' + tableName + ' SET ' + keys.map(k => `\`${k}\`='${object[k]}'`).join(', ') + ' WHERE '+query;
+    console.log(sql);
+    
+    return this.query(sql, values)
 
   }
 
