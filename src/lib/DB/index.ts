@@ -35,9 +35,7 @@ export class DB {
   }
   updateRow(tableName: string, query: string, values: string[], object: any) {
     const keys = Object.keys(object)
-    const sql = 'UPDATE ' + tableName + ' SET ' + keys.map(k => `\`${k}\`='${object[k]}'`).join(', ') + ' WHERE '+query;
-    console.log(sql);
-    
+    const sql = 'UPDATE ' + tableName + ' SET ' + keys.map(k => `\`${k}\`='${object[k]}'`).join(', ') + ' WHERE '+query;    
     return this.query(sql, values)
 
   }
