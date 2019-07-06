@@ -1,6 +1,8 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 
 import { API } from "./API";
+import { NextFunction } from 'connect';
+import bodyParser = require('body-parser');
 
 const cd = process.cwd()
 
@@ -14,11 +16,16 @@ export class Server {
     this.mountRoutes();
   }
   private mountMiddleware() {
+    this.app.use(bodyParser());
     this.app.use('/', express.static(cd + '/public'))
   }
   private mountRoutes() {
+    
     this.app.use('/', api.router);
-  }
+    this.app.use((error:Error, req:Request, res:Response, next:NextFunction)=> {
+      res.status(500).send({error})
+    });
+    }
   listen() {
     this.app.listen(3000)
   }
