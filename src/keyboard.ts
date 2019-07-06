@@ -24,7 +24,6 @@ const keymap: KeyMap = {
   43: 'tab',
   41: 'esc',
   76: 'del'
-
 }
 
 
@@ -33,26 +32,23 @@ const emitter = new EventEmitter;
 
 
 function main() {
-
   try {
-
-
     const keyboard = HID.devices().find((device) => device.serialNumber == SERIAL);
-
 
     if (keyboard) {
       try {
         execSync('sudo chmod 777 ' + keyboard.path)
         const hid = new HID.HID(keyboard.path);
+        
         logged = true
         emitter.emit('connected')
-        hid.on('error', (e) => { emitter.emit('error', e); main() })
+        hid.on('error', (e) => { emitter.emit('error', e); hid.close(); main() })
         hid.on("data", (buffer: Buffer) => {
           const type = buffer[0];
 
           if (type === 1 || type === 2) {
             const key = buffer[3];
-            if (key === 0) {
+            if (key === 0) { 
               return;
             }
 
@@ -65,17 +61,13 @@ function main() {
               emitter.emit('key', symbol, new Date);
 
             }
-
             return;
           }
         })
       } catch (error) {
         console.error(error);
-
         main()
       }
-
-
     } else {
       if (!logged) console.error('keyboard doesnt found, find again');
       logged = true;
@@ -92,7 +84,6 @@ function main() {
 
 setTimeout(() => {
   main()
-
 }, 1);
 
 
