@@ -2,9 +2,10 @@ import { Router, NextFunction } from "express";
 import { tables } from '../lib/DB'
 import { StatementTable, CategoryTable } from "../lib/DB/Table";
 import { Request, Response } from "express-serve-static-core";
+import { Fetcher } from "../lib/Audio/fetcher";
 
 const { statementTable, categoryTable } = tables;
-
+const fetcher = new Fetcher();
 
 export class API {
   router: Router;
@@ -15,6 +16,8 @@ export class API {
     this.router.post('/statement/create', this.createStatement)
     this.router.delete('/delete/:table/:id', this.delete)
     this.router.post('/update/:table/:id', this.update)
+
+    this.router.get('/fetch-audio', this.fetch)
   }
 
 
@@ -64,6 +67,10 @@ export class API {
       
     }
       res.send({status:'ok'})
+  }
+  async fetch(req: Request, res: Response) {
+    res.send({status:'ok'})
+    fetcher.fetch()
   }
   
 }

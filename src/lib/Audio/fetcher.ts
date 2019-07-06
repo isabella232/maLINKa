@@ -3,6 +3,7 @@ import { tables } from "../DB";
 import { createWriteStream, mkdirSync } from "fs";
 import { get } from "http";
 import { SYSTEM_STATEMENTS } from "./System";
+import player from "./player";
 
 const { statementTable, categoryTable } = tables;
 
@@ -22,9 +23,10 @@ try {
 
 const URL = 'http://mac:8484?text='
 
-class Fetcher {
+export class Fetcher {
 
   async fetch() {
+    player.playSystem(SYSTEM_STATEMENTS.START_FETCH)
     const statements = await statementTable.getAllStatements()
 
     for (const index in statements) {
@@ -48,6 +50,8 @@ class Fetcher {
         console.log(element.code + ' downloaded');
 
       }
+      player.playSystem(SYSTEM_STATEMENTS.FINISH_FETCH)
+
     }
 
     process.exit()
