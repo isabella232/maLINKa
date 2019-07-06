@@ -13,7 +13,7 @@ export class API {
     this.router = Router();
     this.router.get('/categories', this.sendRows(categoryTable.tableName))
     this.router.get('/statements', this.sendRows(statementTable.tableName))
-    this.router.post('/statement/create', this.createStatement)
+    this.router.post('/create/:table', this.create)
     this.router.delete('/delete/:table/:id', this.delete)
     this.router.post('/update/:table/:id', this.update)
 
@@ -42,10 +42,17 @@ export class API {
     }
   }
 
-  async createStatement(req: Request, res: Response, next: NextFunction) {
+  async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const statement = await statementTable.createStatement(req.body.title, req.body.keys, req.body.categoriesId);
-      res.send(statement)
+      if(req.params.table==='category'){
+
+        const category = await categoryTable.createCategory(req.body.title, req.body.key);
+        res.send(category)
+      }else{
+
+        const statement = await statementTable.createStatement(req.body.title, req.body.keys, req.body.categoriesId);
+        res.send(statement)
+      }
     } catch (e) {
       next(e)
     }
