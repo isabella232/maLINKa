@@ -13,7 +13,7 @@ export class API {
     this.router.get('/categories', this.sendRows(categoryTable.tableName))
     this.router.get('/statements', this.sendRows(statementTable.tableName))
     this.router.post('/statement/create', this.createStatement)
-    this.router.post('/delete/:table/:id', this.delete)
+    this.router.delete('/delete/:table/:id', this.delete)
   }
 
 
