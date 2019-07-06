@@ -46,7 +46,7 @@ export class API {
     try {
       if(req.params.table==='category'){
 
-        const category = await categoryTable.createCategory(req.body.title, req.body.key);
+        const category = await categoryTable.createCategory(req.body.title, req.body.keys);
         res.send(category)
       }else{
 
@@ -54,6 +54,8 @@ export class API {
         res.send(statement)
       }
     } catch (e) {
+      console.error(e);
+      
       next(e)
     }
   }
