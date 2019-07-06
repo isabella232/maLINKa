@@ -53,6 +53,6 @@ export class API {
     } else if (req.params.table == 'statement') {
       await statementTable.deleteRowById(req.params.id)
     }
-    res.send({status:'ok'})
+      res.send({status:'ok'})
   }
 }
