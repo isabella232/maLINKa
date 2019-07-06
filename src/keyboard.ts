@@ -39,16 +39,16 @@ function main() {
       try {
         execSync('sudo chmod 777 ' + keyboard.path)
         const hid = new HID.HID(keyboard.path);
-        
+        hid.on('error', (e) => { emitter.emit('error', e); hid.close(); main() })
+
         logged = true
         emitter.emit('connected')
-        hid.on('error', (e) => { emitter.emit('error', e); hid.close(); main() })
         hid.on("data", (buffer: Buffer) => {
           const type = buffer[0];
 
           if (type === 1 || type === 2) {
             const key = buffer[3];
-            if (key === 0) { 
+            if (key === 0) {
               return;
             }
 
@@ -57,16 +57,17 @@ function main() {
             }
             if (key > 3 && key < 40) {
               const symbolid = key - 4;
-              const symbol = APLHABET[symbolid]
+              const symbol = APLHABET[symbolid];
               emitter.emit('key', symbol, new Date);
-
             }
             return;
           }
         })
       } catch (error) {
         console.error(error);
-        main()
+        setTimeout(() => {
+          main()
+        }, 3000);    
       }
     } else {
       if (!logged) console.error('keyboard doesnt found, find again');
