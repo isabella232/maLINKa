@@ -13,6 +13,7 @@ export class API {
     this.router.get('/categories', this.sendRows(categoryTable.tableName))
     this.router.get('/statements', this.sendRows(statementTable.tableName))
     this.router.post('/statement/create', this.createStatement)
+    this.router.post('/delete/:table/:id', this.delete)
   }
 
 
@@ -23,9 +24,9 @@ export class API {
         if (table === categoryTable.tableName) {
           rows = await categoryTable.getAllCategories()
         } else {
-          if (req.query.by != null){
+          if (req.query.by != null) {
             rows = await statementTable.getStatementsByCategory(parseInt(req.query.by))
-          } else{
+          } else {
             rows = await statementTable.getAllStatements();
           }
         }
@@ -37,12 +38,21 @@ export class API {
     }
   }
 
-  async createStatement(req: Request, res: Response, next:NextFunction) {
-    try{
-    const statement = await statementTable.createStatement(req.body.title, req.body.keys, req.body.categoriesId);
-    res.send(statement)
-    } catch(e){
+  async createStatement(req: Request, res: Response, next: NextFunction) {
+    try {
+      const statement = await statementTable.createStatement(req.body.title, req.body.keys, req.body.categoriesId);
+      res.send(statement)
+    } catch (e) {
       next(e)
     }
+  }
+
+  async delete(req: Request, res: Response) {
+    if (req.params.table == 'category') {
+      await categoryTable.deleteRowById(req.params.id);
+    } else if (req.params.table == 'statement') {
+      await statementTable.deleteRowById(req.params.id)
+    }
+    res.send({status:'ok'})
   }
 }
