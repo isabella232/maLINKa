@@ -25,7 +25,7 @@ class Application {
 
   constructor() {
 
-    execSync(homedir()+'/back.sh')
+    execSync(homedir() + '/back.sh')
     const db = new DB;
     this.categoryTable = new CategoryTable(db);
     this.statementTable = new StatementTable(db);

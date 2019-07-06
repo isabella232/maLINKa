@@ -79,22 +79,22 @@ class TermInput {
         await statementTable.deleteRowById(parseInt(args[0]))
 
       }
-    } else if (command==='mt') {
+    } else if (command === 'mt') {
       if (this.currentCategory == null) {
         await categoryTable.updateTitle(parseInt(args[0]), args[1])
-      }else{
+      } else {
         await statementTable.updateTitle(parseInt(args[0]), args[1])
 
       }
-    
-  } else if (command==='mk') {
-    if (this.currentCategory == null) {
-      await categoryTable.updateKeys(parseInt(args[0]), args[1].split(','))
-    }else{
-      await statementTable.updateKeys(parseInt(args[0]), args[1].split(','))
 
-    }
-  } else {
+    } else if (command === 'mk') {
+      if (this.currentCategory == null) {
+        await categoryTable.updateKeys(parseInt(args[0]), args[1].split(','))
+      } else {
+        await statementTable.updateKeys(parseInt(args[0]), args[1].split(','))
+
+      }
+    } else {
       console.log('command doesn\'t found');
 
     }

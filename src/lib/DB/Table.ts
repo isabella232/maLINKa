@@ -1,4 +1,3 @@
-import { Item } from "../../structs/Item";
 import { DB } from ".";
 import { Category } from "../../structs/Category";
 import { Statement } from "../../structs/Statement";
@@ -6,7 +5,6 @@ import { Statement } from "../../structs/Statement";
 
 
 abstract class Table {
-
   db: DB;
   tableName: string;
 
@@ -33,14 +31,14 @@ abstract class Table {
   deleteRowById(id: number): Promise<null> {
     return this.deleteRow("`id`=?", [id.toString()]);
   }
-  updateRow(query:string,values:string[], newValues:object){
+  updateRow(query: string, values: string[], newValues: object) {
     return this.db.updateRow(this.tableName, query, values, newValues)
   }
-  updateTitle(id:number, title:string):Promise<null>{
-    return this.updateRow("`id`=?", [id.toString()], {title})
+  updateTitle(id: number, title: string): Promise<null> {
+    return this.updateRow("`id`=?", [id.toString()], { title })
   }
-  updateKeys(id:number, keys:string[]):Promise<null>{
-    return this.updateRow("`id`=?", [id.toString()], {keys:keys.join(',')})
+  updateKeys(id: number, keys: string[]): Promise<null> {
+    return this.updateRow("`id`=?", [id.toString()], { keys: keys.join(',') })
   }
 }
 

@@ -7,12 +7,12 @@ const EXP = /\[(.*?)\/(.*?)\]/g;
 export class Statement extends Item {
   categoriesId: Number[]
   constructor(id: Number, title: String, keys: String[], categoriesId: Number[]) {
-    super({id, title, keys});
+    super({ id, title, keys });
     this.categoriesId = categoriesId
   }
 
-  get isMultivalued():boolean{
-    return this.title.match(EXP)!=undefined;
+  get isMultivalued(): boolean {
+    return this.title.match(EXP) != undefined;
   }
 
 
@@ -22,5 +22,4 @@ export class Statement extends Item {
   get textDown(): string {
     return this.title.replace(EXP, '$2')
   }
-
 }

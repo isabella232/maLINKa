@@ -4,7 +4,7 @@ import { CategoryTable, StatementTable } from './Table';
 
 
 export class DB {
-  
+
   pool: mariadb.Pool;
 
   constructor() {
@@ -30,12 +30,12 @@ export class DB {
   findWhere(tableName: string, query: string, values: string[]): Promise<[any]> {
     return this.query('SELECT * FROM ' + tableName + ' where ' + query, values);
   }
-  deleteRow(tableName:string, query:string, values:string[]):Promise<any>{
-    return this.query('DELETE FROM '+tableName+' where '+query, values)
+  deleteRow(tableName: string, query: string, values: string[]): Promise<any> {
+    return this.query('DELETE FROM ' + tableName + ' where ' + query, values)
   }
   updateRow(tableName: string, query: string, values: string[], object: object) {
     const keys = Object.keys(object)
-    return this.query('UPDATE ' + tableName + ' SET ' + keys.map(k => `\`${k}\`='?'`).join(', ')+';' , Object.values(object))
+    return this.query('UPDATE ' + tableName + ' SET ' + keys.map(k => `\`${k}\`='?'`).join(', ') + ';', Object.values(object))
 
   }
 
@@ -44,8 +44,7 @@ export class DB {
       host: '127.0.0.1',
       user: 'root',
       password: '0812',
-      database: 'vanilin',
-      
+      database: 'vanilin'
     });
   }
 
