@@ -1,5 +1,5 @@
 {
-  "name": "vanilin",
+  "name": "malinka",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://pi@vanilin:/var/node/vanilin.git"
+    "url": "ssh://pi@malinka:/var/node/malinka.git"
   },
   "author": "ibakaidov",
   "license": "ISC",
