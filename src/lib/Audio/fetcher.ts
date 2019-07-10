@@ -68,9 +68,10 @@ export class Fetcher {
         if (content === title) {
           console.log('not modified');
           return resolve()
-          
+
         }
       } catch (error) {
+
       }
 
       await writeFile(metaPath, title);
