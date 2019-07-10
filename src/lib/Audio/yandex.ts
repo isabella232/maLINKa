@@ -1,28 +1,46 @@
 import querystring from 'querystring';
 import Axios from "axios";
+import Speaker from 'speaker';
 
-async function request(text: string, voice: string) {
-  let res;
-  try {
-    res = await Axios.post('https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize', querystring.stringify({
-      text,
-      voice,
+const speaker = new Speaker({
+  channels: 1,          // 1 channel
+  bitDepth: 16,         // 32-bit samples
+  sampleRate: 48000,     // 48,000 Hz sample rate
 
-      'format': 'lpcm',
-      'sampleRateHertz': 48000
+});
 
-    }), {
-        headers: {
-          Authorization: 'Api-Key AQVNzwBLoHj5BlmKA8_al4cGxCKonMnlhGJorvWD'
-        },
-        responseType: "arraybuffer"
-      });
-  } catch (e) {
-    console.error(e);
+export function yandexSpeech(text: string, voice: string) {
+  return new Promise(async (resolve, reject) => {
 
-  }
-  process.stdout.write(res.data);
+    let res;
+    try {
+      res = await Axios.post('https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize', querystring.stringify({
+        text,
+        voice,
+
+        'format': 'lpcm',
+        'sampleRateHertz': 48000
+
+      }), {
+          headers: {
+            Authorization: 'Api-Key AQVNzwBLoHj5BlmKA8_al4cGxCKonMnlhGJorvWD'
+          },
+          responseType: "stream"
+        });
+      res.data.on('data', (chunk: Buffer) => {
+        speaker.write(chunk)
+      })
+      res.data.on('end', (chunk: Buffer | null) => {
+        if (chunk != null) {
+          speaker.write(chunk)
+        }
+        resolve()
+      })
+    } catch (e) {
+      console.error(e);
+      reject(e)
+    }
+  })
+
 
 }
-
-request('Я занимаюсь разработкой программ для  неговорящих людей. ', 'zahar')

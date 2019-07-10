@@ -9,6 +9,7 @@ import caps from './lib/Caps';
 import { SYSTEM_STATEMENTS } from './lib/Audio/System';
 import { execSync } from 'child_process';
 import { homedir } from 'os';
+import { Smart } from "./Smart";
 
 const server = new Server();
 server.listen();
@@ -132,3 +133,4 @@ class Application {
 
 
 (new Application);
+new Smart
