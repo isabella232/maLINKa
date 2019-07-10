@@ -54,7 +54,6 @@ export class Fetcher {
 
     }
 
-    process.exit()
 
   }
   download(title: string, id: Number | String, system: boolean = false): Promise<Buffer> {
@@ -91,5 +90,9 @@ export class Fetcher {
 }
 if (module.parent == null) {
 
-  (new Fetcher).fetch()
+  (new Fetcher).fetch().then(()=>{
+
+    process.exit()
+  })
+
 }
