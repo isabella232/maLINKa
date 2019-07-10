@@ -62,7 +62,7 @@ export class Fetcher {
 
       const file = createWriteStream((system ? SYSTEM_ROOT : ROOT) + id + '.wav');
 
-      const metaPath = file+'.txt';
+      const metaPath = file + '.txt';
       try {
         const content = await readFile(metaPath, { encoding: 'UTF-8' })
         if (content === title) {
@@ -72,7 +72,7 @@ export class Fetcher {
       } catch (error) {
       }
 
-      writeFile(metaPath, title);
+      await writeFile(metaPath, title);
 
       const request = get(URL + encodeURI(title) + '&system=' + system, (response) => {
         response.pipe(file);
