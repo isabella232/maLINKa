@@ -60,9 +60,9 @@ export class Fetcher {
   download(title: string, id: Number | String, system: boolean = false): Promise<Buffer> {
     return new Promise(async (resolve, reject) => {
 
-      const file = createWriteStream((system ? SYSTEM_ROOT : ROOT) + id + '.wav');
+      const path = (system ? SYSTEM_ROOT : ROOT) + id + '.wav';
 
-      const metaPath = file + '.txt';
+      const metaPath = path + '.txt';
       try {
         const content = await readFile(metaPath, { encoding: 'UTF-8' })
         if (content === title) {
@@ -73,6 +73,7 @@ export class Fetcher {
       }
 
       await writeFile(metaPath, title);
+      const file = createWriteStream(path);
 
       const request = get(URL + encodeURI(title) + '&system=' + system, (response) => {
         response.pipe(file);
