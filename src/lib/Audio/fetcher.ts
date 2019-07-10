@@ -1,11 +1,12 @@
 import { homedir } from "os";
 import { tables } from "../DB";
-import { createWriteStream, mkdirSync } from "fs";
+import { promises, mkdirSync, createWriteStream } from "fs";
 import { get } from "http";
 import { SYSTEM_STATEMENTS } from "./System";
 import player from "./player";
 
 const { statementTable, categoryTable } = tables;
+const { readFile, writeFile } = promises
 
 
 export const ROOT = homedir() + '/audio/'
@@ -34,7 +35,6 @@ export class Fetcher {
       if (statement.isMultivalued) {
         await this.download(statement.textUp.toString(), statement.id + "u")
         await this.download(statement.textDown.toString(), statement.id + "d")
-
       }
       else {
         await this.download(statement.title.toString(), statement.id)
@@ -58,9 +58,22 @@ export class Fetcher {
 
   }
   download(title: string, id: Number | String, system: boolean = false): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
       const file = createWriteStream((system ? SYSTEM_ROOT : ROOT) + id + '.wav');
+
+      const metaPath = file+'.txt';
+      try {
+        const content = await readFile(metaPath, { encoding: 'UTF-8' })
+        if (content === title) {
+          console.log('not modified');
+          resolve()
+        }
+      } catch (error) {
+      }
+
+      writeFile(metaPath, title);
+
       const request = get(URL + encodeURI(title) + '&system=' + system, (response) => {
         response.pipe(file);
         file.on('finish', () => {
