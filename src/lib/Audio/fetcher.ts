@@ -67,7 +67,8 @@ export class Fetcher {
         const content = await readFile(metaPath, { encoding: 'UTF-8' })
         if (content === title) {
           console.log('not modified');
-          resolve()
+          return resolve()
+          
         }
       } catch (error) {
       }
