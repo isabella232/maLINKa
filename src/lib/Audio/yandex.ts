@@ -9,6 +9,8 @@ import { spawn } from 'child_process';
 //   sampleRate: 48000,     // 48,000 Hz sample rate
 
 // });
+const aplay = spawn('aplay', ['-i', '--file-type=raw', '--rate=4800', '-c 1'])
+aplay.stderr.pipe(process.stderr)
 
 
 export function yandexSpeech(text: string, voice: string) {
@@ -21,7 +23,7 @@ export function yandexSpeech(text: string, voice: string) {
         voice,
 
         'format': 'lpcm',
-        'sampleRateHertz': 48000
+        'sampleRateHertz': 4800
 
       }), {
           headers: {
@@ -29,8 +31,6 @@ export function yandexSpeech(text: string, voice: string) {
           },
           responseType: "stream"
         });
-      const aplay = spawn('aplay', ['-i', '--file-type=raw', '--rate=48000', '-c 1'])
-      aplay.stderr.pipe(process.stderr)
       res.data.on('data', (chunk: Buffer) => {
         // speaker.write(chunk)
         aplay.stdin.write(chunk);
@@ -40,7 +40,7 @@ export function yandexSpeech(text: string, voice: string) {
           aplay.stdin.write(chunk)
           // speaker.write(chunk)
         }
-        aplay.kill()
+
         resolve()
       })
     } catch (e) {
