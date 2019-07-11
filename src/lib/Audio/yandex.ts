@@ -10,7 +10,6 @@ import { spawn } from 'child_process';
 
 // });
 
-const aplay = spawn('aplay', ['-i', '-t raw', '--rate=48000', '-c 1'])
 
  export function yandexSpeech(text: string, voice: string) {
   return new Promise(async (resolve, reject) => {
@@ -30,6 +29,8 @@ const aplay = spawn('aplay', ['-i', '-t raw', '--rate=48000', '-c 1'])
           },
           responseType: "stream"
         });
+  const aplay = spawn('aplay', ['-i', '-t raw', '--rate=48000', '-c 1'])
+
       res.data.on('data', (chunk: Buffer) => {
         // speaker.write(chunk)
         aplay.stdin.write(chunk);
@@ -39,6 +40,7 @@ const aplay = spawn('aplay', ['-i', '-t raw', '--rate=48000', '-c 1'])
           aplay.stdin.write(chunk)
           // speaker.write(chunk)
         }
+        aplay.kill()
         resolve()
       })
     } catch (e) {
