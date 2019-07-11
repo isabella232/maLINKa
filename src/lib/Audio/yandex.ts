@@ -29,7 +29,7 @@ export function yandexSpeech(text: string, voice: string) {
           },
           responseType: "stream"
         });
-      const aplay = spawn('aplay', ['-i', '-t raw', '--rate=48000', '-c 1'])
+      const aplay = spawn('aplay', ['-i', '--file-type=raw', '--rate=48000', '-c 1'])
       aplay.stderr.pipe(process.stderr)
       res.data.on('data', (chunk: Buffer) => {
         // speaker.write(chunk)
