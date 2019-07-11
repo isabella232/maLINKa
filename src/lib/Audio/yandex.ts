@@ -10,7 +10,7 @@ import { spawn } from 'child_process';
 
 // });
 
-const aplay = spawn('aplay -i -t raw --rate=48000 -c 1')
+const aplay = spawn('aplay', ['-i', '-t raw', '--rate=48000', '-c 1'])
 
  export function yandexSpeech(text: string, voice: string) {
   return new Promise(async (resolve, reject) => {
