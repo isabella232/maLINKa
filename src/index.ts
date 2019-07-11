@@ -14,7 +14,7 @@ import { Smart } from "./Smart";
 const server = new Server();
 server.listen();
 
-
+const smart = new Smart;
 
 class Application {
 
@@ -75,6 +75,10 @@ class Application {
       player.stop()
     })
 
+      keyboard.on('up',()=>{
+        smart.goodMorning()
+      })
+
     player.playSystem(SYSTEM_STATEMENTS.STARTUP)
 
   }
@@ -133,4 +137,3 @@ class Application {
 
 
 (new Application);
-new Smart
