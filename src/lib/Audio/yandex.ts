@@ -1,15 +1,18 @@
 import querystring from 'querystring';
 import Axios from "axios";
-import Speaker from 'speaker';
+import { spawn } from 'child_process';
+// import Speaker from 'speaker';
 
-const speaker = new Speaker({
-  channels: 1,          // 1 channel
-  bitDepth: 16,         // 32-bit samples
-  sampleRate: 48000,     // 48,000 Hz sample rate
+// const speaker = new Speaker({
+//   channels: 1,          // 1 channel
+//   bitDepth: 16,         // 32-bit samples
+//   sampleRate: 48000,     // 48,000 Hz sample rate
 
-});
+// });
 
-export function yandexSpeech(text: string, voice: string) {
+const aplay = spawn('aplay -i -t raw --rate=48000 -c 1')
+
+ export function yandexSpeech(text: string, voice: string) {
   return new Promise(async (resolve, reject) => {
 
     let res;
@@ -28,11 +31,13 @@ export function yandexSpeech(text: string, voice: string) {
           responseType: "stream"
         });
       res.data.on('data', (chunk: Buffer) => {
-        speaker.write(chunk)
+        // speaker.write(chunk)
+        aplay.stdin.write(chunk);
       })
       res.data.on('end', (chunk: Buffer | null) => {
         if (chunk != null) {
-          speaker.write(chunk)
+          aplay.stdin.write(chunk)
+          // speaker.write(chunk)
         }
         resolve()
       })
